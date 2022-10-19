@@ -1,0 +1,54 @@
+#include <stdio.h>
+int max(int a,int b)
+{
+    if(a>b)
+    return a;
+    else
+    return b;
+}
+int knapsack(int w,int *wt,int *value,int n)
+{
+    int K[n+1][w+1];
+    int i,j;
+    for(i=0;i<=n;i++)
+    {
+        for(j=0;j<=w;j++)
+        {
+            if(i==0 || j==0)
+            {
+                K[i][j]=0;
+            }
+            else if(j>=wt[i-1])
+            {
+                K[i][j]=max(K[i-1][j],value[i-1]+K[i-1][j-wt[i-1]]);
+            }
+            else
+            {
+                K[i][j]=K[i-1][j];
+            }
+        }
+    }
+    return K[n][w];
+}
+
+int main()
+{
+   int n,i,j;
+   printf("Enter the number of items\n");
+   scanf("%d",&n);
+   int value[n];
+   printf("Enter the maximum capacity\n");
+   int w;
+   scanf("%d",&w);
+   printf("Enter the values and corresponding weight\n");
+   int weight[n];
+   for(i=0;i<n;i++)
+   {
+       scanf("%d%d",&value[i],&weight[i]);
+   }
+  
+           printf("%d ",knapsack(w,weight,value,n));
+
+    
+    return 0;
+}

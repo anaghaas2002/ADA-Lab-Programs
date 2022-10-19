@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+int n,c=0,i;
+
+
+
+void linear(int a[10],int n,int key)
+{
+    for(i=0;i<n;i++)
+    {
+        if(a[i]==key)
+        {
+            c=1;
+            break;
+        }
+    }
+    if(c==1)
+    {
+        printf("Element is present\n");
+    }
+    else
+    {
+        printf("Element is not present\n");
+    }
+}
+int main()
+{
+  
+   printf("Enter the number of elements in the array\n");
+   scanf("%d",&n);
+   int a[n];
+   printf("Enter the elements in the array\n");
+   for(i=0;i<n;i++)
+   {
+       scanf("%d",&a[i]);
+   }
+  int key;
+  printf("Enter the key to be eneterd\n");
+  scanf("%d",&key);
+  linear(a,n,key);
+  
+    return 0;
+}

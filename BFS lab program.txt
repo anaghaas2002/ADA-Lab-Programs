@@ -1,0 +1,81 @@
+#include <stdio.h>
+
+int a[10][10],visited[10],n,front=0,rear=-1,q[10],flag=0;
+
+void insertq(int v)
+{
+    rear=rear+1;
+    q[rear]=v;
+}
+
+int qempty()
+{
+    if(rear<front)
+    {
+        return 1;
+    }
+    return 0;
+}
+
+int deleteq()
+{
+    int a;
+    a=q[front];
+    front=front+1;
+    return a;
+}
+
+void bfs(int v)
+{
+    int w;
+     visited[v]=1;
+     insertq(v);
+     
+    while(!qempty())
+    {
+        v=deleteq();
+        for(w=1;w<=n;w++)
+        {
+            if(a[v][w]==1 && visited[w]==0)
+            {
+                visited[w]=1;
+                printf(" %d ",w);
+                flag=1;
+                insertq(w);
+            }
+        }
+    }
+}
+
+
+int main ()
+{
+  
+  printf ("Enter the size of the matrix\n");
+  scanf ("%d", &n);
+  
+  printf ("Enter the adjacency matrix\n");
+  int i,j;
+  for(i=1;i<=n;i++)
+   {
+      for(j=1;j<=n;j++)
+      {
+          scanf("%d",&a[i][j]);
+      }
+   }
+   int s;
+   printf("Enter the starting vertex\n");
+   scanf("%d",&s);
+   for(i=1;i<=n;i++)
+   {
+       visited[i]=0;
+   }
+  printf("Enter the reachable vertex\n");
+  printf("%d",s);
+  bfs(s);
+  if(flag==0)
+  {
+      printf("No path found\n");
+  }
+  return 0;
+}

@@ -1,0 +1,90 @@
+#include <stdio.h>
+#include<stdlib.h>
+#include<time.h>
+int interpolationsearch(int a[],int lo,int hi,int x);
+void delay(int time)
+{
+    int milli=1000*time;
+    clock_t st=clock();
+    while(clock()<time+milli);
+}
+void sort(int *a,int n)
+{
+    int i,j,temp;
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<=n-i-1;j++)
+        {
+            if(a[j]>a[j+1])
+            {
+                temp=a[j];
+                a[j]=a[j+1];
+                a[j+1]=temp;
+            }
+        }
+    }
+    for(i=0;i<n;i++)
+    {
+        printf("%d ",a[i]);
+    }
+}
+
+int main()
+{
+    clock_t st,end;
+    
+    st=clock();
+    delay(100);
+    int i,n,x;
+    int index;
+    printf("Enter the number of elements in the array\n");
+    scanf("%d",&n);
+    int a[1000001];
+    for(i=0;i<n;i++)
+    {
+       a[i]=rand()%100000;
+     
+    }
+    printf("The array after sorting is\n");
+    sort(a,n);
+    printf("Enter the element to be searched\n");
+    scanf("%d",&x);
+    index=interpolationsearch(a,0,n-1,x);
+    if(index!=-1)
+    {
+        printf("Element found at index %d\n",index);
+    }
+    else
+    printf("The element is not present in the array\n");
+    end=clock();
+    double totaltime=(end-st)/CLOCKS_PER_SEC;
+    printf("Time comlexity is %lf",totaltime);
+    return 0;
+}
+
+int interpolationsearch(int a[],int lo,int hi,int x)
+{
+    int pos;
+    if(lo<=hi && x>=a[lo] && x<=a[hi])
+    {
+         pos = lo + (((double)(hi - lo) / (a[hi] - a[lo])) * (x - a[lo]));
+         
+        if (a[pos] == x)
+            return pos;
+ 
+        
+        if (a[pos] < x)
+            return interpolationsearch(a, pos + 1, hi, x);
+ 
+        
+        if (a[pos] > x)
+            return interpolationsearch(a, lo, pos - 1, x);     
+                
+    }
+    return -1;
+}
+
+
+
+
+
